@@ -1,7 +1,3 @@
-# docker build -t dariusmurawski/lunarvim:latest .
-# docker login -u dariusmurawski
-# docker push dariusmurawski/lunarvim:latest
-# docker run -v $PWD:/repo -it dariusmurawski/lunarvim:latest bash
 FROM ubuntu:latest AS base
 RUN apt-get update -y && apt upgrade -y && apt-get install -y curl git make nodejs npm build-essential gcc
 
@@ -40,6 +36,7 @@ RUN npm install -g  \
     tree-sitter-cli \
     tree-sitter-css  \
     https://github.com/camdencheek/tree-sitter-dockerfile \
+    https://github.com/MichaHoffmann/tree-sitter-hcl \
     tree-sitter-html  \
     tree-sitter-javascript  \
     tree-sitter-json  \
@@ -91,7 +88,30 @@ ENV PATH="/root/.local/bin:$PATH"
 RUN echo "vim.opt.timeoutlen = 100" >> /root/.config/lvim/config.lua
 
 ## update plugins
-# RUN lvim :MasonUpdate
-#
+RUN lvim --headless +':Lazy update' +qall
+RUN lvim --headless +':MasonUpdate' +qall
+
+## install plugins
+RUN lvim --headless +':MasonInstall ansible-lint' +qall
+# RUN lvim --headless +':MasonInstall bash-debug-adapter' +qall
+RUN lvim --headless +':MasonInstall bash-language-server' +qall
+RUN lvim --headless +':MasonInstall black' +qall
+RUN lvim --headless +':MasonInstall dockerfile-language-server' +qall
+RUN lvim --headless +':MasonInstall flake8' +qall
+RUN lvim --headless +':MasonInstall gitlint' +qall
+RUN lvim --headless +':MasonInstall jq' +qall
+RUN lvim --headless +':MasonInstall json-lsp' +qall
+RUN lvim --headless +':MasonInstall lua-language-server' +qall
+RUN lvim --headless +':MasonInstall markdownlint' +qall
+RUN lvim --headless +':MasonInstall pyright' +qall
+RUN lvim --headless +':MasonInstall python-lsp-server' +qall
+# RUN lvim --headless +':MasonInstall rust-analyser' +qall
+# RUN lvim --headless +':MasonInstall terraform-ls' +qall
+# RUN lvim --headless +':MasonInstall tflint' +qall
+# RUN lvim --headless +':MasonInstall yaml-language-server'
+RUN lvim --headless +':MasonInstall yamlfix' +qall
+RUN lvim --headless +':MasonInstall yamlfmt' +qall
+RUN lvim --headless +':MasonInstall yamllint' +qall
+
 ## install font on your client
 ## curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/UbuntuMono.zip -o UbuntuMono.zip
