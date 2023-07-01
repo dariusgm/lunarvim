@@ -15,7 +15,7 @@ RUN LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygi
 FROM python:3.11 AS python
 # python
 RUN python -m pip install --upgrade pip
-RUN python -m pip install pynvim
+RUN python -m pip install pynvim ansible-lint yamllint
 
 
 FROM base AS rust
