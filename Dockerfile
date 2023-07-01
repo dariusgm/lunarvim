@@ -15,8 +15,14 @@ RUN LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygi
 FROM python:3.11 AS python
 # python
 RUN python -m pip install --upgrade pip
-RUN python -m pip install pynvim ansible-lint yamllint
-
+RUN python -m pip install pynvim \
+  ansible-lint \
+  yamllint black \
+  flake8 \
+  gitlint \
+  python-lsp-server[all] \
+  yamlfix \
+  yamllint
 
 FROM base AS rust
 RUN curl --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh -s -- -y && \
@@ -86,7 +92,7 @@ RUN  curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/
 ENV PATH="/root/.local/bin:$PATH"
 ## install config
 RUN echo "vim.opt.timeoutlen = 100" >> /root/.config/lvim/config.lua
-
+RUN echo "set clipboard+=unnamedplus" >> /root/.config/lvim/config.lua
 ## update plugins
 RUN lvim --headless +':Lazy update' +qall
 RUN lvim --headless +':MasonUpdate' +qall
@@ -101,7 +107,7 @@ RUN lvim --headless +':MasonInstall flake8' +qall
 RUN lvim --headless +':MasonInstall gitlint' +qall
 RUN lvim --headless +':MasonInstall jq' +qall
 RUN lvim --headless +':MasonInstall json-lsp' +qall
-RUN lvim --headless +':MasonInstall lua-language-server' +qall
+RUN lvim --headless +':MasonInstall lua-language-server' +qall > /dev/null
 RUN lvim --headless +':MasonInstall markdownlint' +qall
 RUN lvim --headless +':MasonInstall pyright' +qall
 RUN lvim --headless +':MasonInstall python-lsp-server' +qall
