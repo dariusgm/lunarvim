@@ -1,5 +1,5 @@
 FROM ubuntu:latest AS base
-RUN apt-get update -y && apt upgrade -y && apt-get install -y curl git make nodejs npm build-essential gcc
+RUN apt-get update -y && apt upgrade -y && apt-get install -y curl git make build-essential gcc
 
 
 FROM base AS lazygit
@@ -35,8 +35,9 @@ RUN /root/.cargo/bin/cargo install fd-find & /root/.cargo/bin/cargo install ripg
 
 
 # for parsers
-FROM base AS node
+FROM node:20 AS node
 RUN npm install -g  \
+    aws-cdk \
     neovim \
     tree-sitter-bash  \
     tree-sitter-cli \
@@ -63,7 +64,6 @@ RUN apt-get install -y wget apt-transport-https software-properties-common && \
 # install aws
 FROM base AS aws
 RUN apt-get install -y unzip && \
-npm install -g aws-cdk && \
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
     unzip -qq awscliv2.zip && \
     ./aws/install && \
@@ -92,10 +92,8 @@ RUN  curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/
 ENV PATH="/root/.local/bin:$PATH"
 ## install config
 RUN echo "vim.opt.timeoutlen = 100" >> /root/.config/lvim/config.lua
-RUN echo "set clipboard+=unnamedplus" >> /root/.config/lvim/config.lua
 ## update plugins
 RUN lvim --headless +':Lazy update' +qall
-RUN lvim --headless +':MasonUpdate' +qall
 
 ## install plugins
 RUN lvim --headless +':MasonInstall ansible-lint' +qall
@@ -118,6 +116,8 @@ RUN lvim --headless +':MasonInstall python-lsp-server' +qall
 RUN lvim --headless +':MasonInstall yamlfix' +qall
 RUN lvim --headless +':MasonInstall yamlfmt' +qall
 RUN lvim --headless +':MasonInstall yamllint' +qall
+# install Tree Sitter components
+RUN lvim --headless + ':TSInstall bash rust python comment regex markdown_inline yaml json lua terraform' +qall
 
 ## install font on your client
 ## curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/UbuntuMono.zip -o UbuntuMono.zip
