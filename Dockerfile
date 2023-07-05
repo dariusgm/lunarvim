@@ -20,6 +20,7 @@ RUN python -m pip install pynvim \
   yamllint black \
   flake8 \
   gitlint \
+  debugpy \
   python-lsp-server[all] \
   yamlfix \
   yamllint
@@ -101,6 +102,7 @@ RUN lvim --headless +':MasonInstall ansible-lint' +qall
 RUN lvim --headless +':MasonInstall bash-language-server' +qall
 RUN lvim --headless +':MasonInstall black' +qall
 RUN lvim --headless +':MasonInstall dockerfile-language-server' +qall
+RUN lvim --headless +':MasonInstall debugpy' +qall
 RUN lvim --headless +':MasonInstall flake8' +qall
 RUN lvim --headless +':MasonInstall gitlint' +qall
 RUN lvim --headless +':MasonInstall jq' +qall
@@ -118,6 +120,6 @@ RUN lvim --headless +':MasonInstall yamlfmt' +qall
 RUN lvim --headless +':MasonInstall yamllint' +qall
 # install Tree Sitter components
 RUN lvim --headless + ':TSInstall bash rust python comment regex markdown_inline yaml json lua terraform' +qall
-
+COPY config.lua /root/.config/lvim/config.lua
 ## install font on your client
 ## curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/UbuntuMono.zip -o UbuntuMono.zip
