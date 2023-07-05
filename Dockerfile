@@ -25,14 +25,8 @@ RUN python -m pip install pynvim \
   yamlfix \
   yamllint
 
-FROM base AS rust
-RUN curl --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh -s -- -y && \
-  apt-get update -y && \
-  apt-get upgrade -y && \
-  apt-get install --reinstall ca-certificates && \
-  update-ca-certificates
-RUN /root/.cargo/bin/cargo install fd-find & /root/.cargo/bin/cargo install ripgrep & wait && \
-    /root/.cargo/bin/rustup default stable
+FROM rust:latest AS rust
+RUN /usr/local/cargo/bin/cargo install fd-find & /usr/local/cargo/bin/cargo install ripgrep & wait && /usr/local/cargo/bin/rustup default stable
 
 
 # for parsers
@@ -77,7 +71,7 @@ RUN apt-get install -y unzip && \
 FROM base
 COPY --from=lazygit /usr/local/bin /usr/local/bin
 COPY --from=python /usr/local /usr/local
-COPY --from=rust /root/.cargo/bin /root/.cargo/bin
+COPY --from=rust /usr/local/cargo/bin /usr/local/cargo/bin
 ENV PATH="/root/.cargo/bin:$PATH"
 COPY --from=powershell7 /usr/bin /usr/bin
 
