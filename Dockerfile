@@ -23,11 +23,14 @@ ARG LV_BRANCH=release-1.3/neovim-0.9
 RUN  curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install-neovim-from-release | bash && \
      curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install.sh | bash -s -- --no-install-dependencies
 ENV PATH="/root/.local/bin:$PATH"
-## install config
+## core update
+RUN lvim +LvimUpdate +LvimSyncCorePlugins +qall
 
-## install plugins
 COPY config.lua /root/.config/lvim/config.lua
-RUN lvim --headless +qall
+RUN lvim --headless +'checkhealth lazy' +qall
+RUN lvim --headless +'Lazy sync' +qall
+# RUN lvim +'MasonInstall black' +qall
+
 
 ## install font on your client
 # curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/UbuntuMono.zip -o UbuntuMono.zip
