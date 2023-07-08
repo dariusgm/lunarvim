@@ -1,0 +1,2 @@
+FROM rust:latest AS rust
+RUN /usr/local/cargo/bin/rustup default stable && /usr/local/cargo/bin/cargo install fd-find & /usr/local/cargo/bin/cargo install ripgrep & wait
