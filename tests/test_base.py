@@ -1,4 +1,3 @@
-import pytest
 import subprocess
 
 def test_git():
