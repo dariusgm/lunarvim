@@ -12,6 +12,7 @@ COPY --from=python /usr/local /usr/local
 COPY --from=powershell7 /usr/bin /usr/bin
 
 COPY --from=aws /usr/local/bin /usr/local/bin
+COPY --from=aws /usr/local/aws-cli/v2/current/bin /usr/local/aws-cli/v2/current/bin
 
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node /usr/local/bin /usr/local/bin
