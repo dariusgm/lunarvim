@@ -15,5 +15,5 @@ def test_lazygit():
         raise AssertionError("expected match")
 
 def test_lazygit_config():
-    path = os.path.join("root", ".config", "lazygit", "config.yml")
+    path = os.path.join("~", ".config", "lazygit", "config.yml")
     assert os.path.exists(path)
