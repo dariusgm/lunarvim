@@ -78,10 +78,10 @@ RUN lvim --headless +'TSInstallSync gitignore' +qall
 ## For tests
 RUN pip install pytest
 COPY tests tests
-# RUN pytest tests
+RUN pytest tests
 
-COPY start* /root
-CMD "/root/start.sh"
+# COPY start* /root
+# CMD "/root/start.sh"
 
 ## install font on your client
 # curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/UbuntuMono.zip -o UbuntuMono.zip
