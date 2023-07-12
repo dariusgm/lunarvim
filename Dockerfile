@@ -8,16 +8,22 @@ FROM dariusmurawski/lunarvim_rust:latest AS rust
 # install neovim and lunarvim
 FROM dariusmurawski/lunarvim_base:latest
 COPY --from=lazygit /usr/local/bin /usr/local/bin
+COPY --from=lazygit /root/.config/ /root/.config/
+
 COPY --from=python /usr/local /usr/local
-COPY --from=powershell7 /usr/bin /usr/bin
+# COPY --from=powershell7 /usr/bin /usr/bin
 
 COPY --from=aws /usr/local/bin /usr/local/bin
+COPY --from=aws /usr/local/aws-cli/ /usr/local/aws-cli/
 
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node /usr/local/bin /usr/local/bin
-COPY --from=rust /usr/local/cargo/bin /usr/local/cargo/bin
-ENV PATH="/root/.cargo/bin:/usr/local/cargo/bin/:$PATH"
 
+COPY --from=rust /usr/local/cargo/bin /usr/local/cargo/bin
+COPY --from=rust /usr/local/rustup /usr/local/rustup
+ENV PATH="/root/.cargo/bin:/usr/local/cargo/bin:/usr/local/rustup:$PATH"
+ENV CARGO_HOME=/usr/local/cargo
+ENV RUSTUP_HOME=/usr/local/rustup
 # neovim and lunarvim
 ARG LV_BRANCH=release-1.3/neovim-0.9
 RUN  curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install-neovim-from-release | bash && \
@@ -66,5 +72,17 @@ RUN lvim --headless +'TSInstallSync comment' +qall
 RUN lvim --headless +'TSInstallSync regex' +qall
 RUN lvim --headless +'TSInstallSync vim' +qall
 RUN lvim --headless +'TSInstallSync vimdoc' +qall
+RUN lvim --headless +'TSInstallSync ini' +qall
+RUN lvim --headless +'TSInstallSync python' +qall
+RUN lvim --headless +'TSInstallSync gitignore' +qall
+## For tests
+RUN pip install pytest
+COPY tests tests
+RUN pytest tests
+
+COPY start* /root
+RUN chmod +x /root/start*
+CMD "/root/start.sh"
+
 ## install font on your client
 # curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/UbuntuMono.zip -o UbuntuMono.zip
