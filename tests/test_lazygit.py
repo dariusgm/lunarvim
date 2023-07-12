@@ -1,5 +1,6 @@
 import subprocess
 import re
+import os
 def test_lazygit():
 
     # commit=5149b24ab3dfad3860e2300519c7c583dcc8c9ff, build date=2023-05-03T08:00:22Z, build source=binaryRelease, version=0.38.2, os=linux, arch=amd64, git version=2.34.1
@@ -13,3 +14,6 @@ def test_lazygit():
     else:
         raise AssertionError("expected match")
 
+def test_lazygit_config():
+    path = os.path.join("root", ".config", "lazygit", "config.yml")
+    assert os.path.exists(path)
