@@ -79,7 +79,7 @@ docker run -v $PWD:/repositories -v ~/.ssh:/root/.ssh -v ~/.gitconfig:/root/.git
 ## Use (Windows)
 
 ```shell
-docker run -it -v .:/repo -v $HOME\.ssh:/root/.ssh -v $HOME\.gitconfig:/root/.gitconfig  lunarvim:latest bash
+docker run -it -v .:/repo -v $HOME\.ssh:/root/.ssh -v $HOME\.gitconfig:/root/.gitconfig  dariusmurawski/lunarvim:latest bash
 chmod 400 -R /root/.ssh && lvim /repo
 ```
  
