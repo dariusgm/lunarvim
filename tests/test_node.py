@@ -3,15 +3,15 @@ import re
 
 
 def test_node():
-    # v18.16.1
+    # v20.3.1
     output = str(
         subprocess.check_output("node --version", shell=True), encoding="utf8"
     ).strip()
     search = re.search(r"v(\d+\.\d+\.\d+)", output)
     if search:
         major, minor, patch = search.group(1).split(".")
-        assert int(major) >= 18
-        assert int(minor) >= 16
+        assert int(major) >= 20
+        assert int(minor) >= 3
         assert int(patch) >= 0
     else:
         raise AssertionError("expected match")

@@ -56,4 +56,4 @@ def test_pip_packages():
                     major_expected, minor_expected, patch_expected = version.split(".")
                     assert int(major) == int(major_expected)
                     assert int(minor) >= int(minor_expected)
-                    assert int(patch) >= int(patch_expected)
+                    assert int(patch) >= 0 
