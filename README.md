@@ -62,10 +62,18 @@ docker build --pull --progress=plain -t dariusmurawski/lunarvim:latest .
 docker push dariusmurawski/lunarvim:latest
 ```
 
+# Use
+Before you can use the image, make sure to add additial credentials via volume,
+so you can work with git and other services, that require credentials.
+
+Run the image of the root directory, where all your repositories are that you want to work with.
+The start.sh script will check at boottime the permissions of the private keys
+and update them accordingly (using chmod 400).
+
 ## Use (Linux)
 
 ```shell
-docker run -v $PWD:/repo -it dariusmurawski/lunarvim:latest bash
+docker run -v $PWD:/repositories -v ~/.ssh:/root/.ssh -v ~/.gitconfig:/root/.gitconfig -it dariusmurawski/lunarvim:latest bash
 ```
 
 ## Use (Windows)

@@ -8,6 +8,7 @@ FROM dariusmurawski/lunarvim_rust:latest AS rust
 # install neovim and lunarvim
 FROM dariusmurawski/lunarvim_base:latest
 COPY --from=lazygit /usr/local/bin /usr/local/bin
+COPY --from=lazygit /root/.config/ /root/.config/it
 COPY --from=python /usr/local /usr/local
 COPY --from=powershell7 /usr/bin /usr/bin
 
@@ -66,5 +67,15 @@ RUN lvim --headless +'TSInstallSync comment' +qall
 RUN lvim --headless +'TSInstallSync regex' +qall
 RUN lvim --headless +'TSInstallSync vim' +qall
 RUN lvim --headless +'TSInstallSync vimdoc' +qall
+RUN lvim --headless +'TSInstallSync ini' +qall
+RUN lvim --headless +'TSInstallSync python' +qall
+RUN lvim --headless +'TSInstallSync gitignore' +qall
 ## install font on your client
+## For tests
+RUN pip install pytest
+COPY tests tests
+RUN pytest tests
+
+COPY start* /root
+CMD "/root/start.sh"
 # curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/UbuntuMono.zip -o UbuntuMono.zip
