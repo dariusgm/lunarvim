@@ -1,1 +1,2 @@
-python start.py
+python /root/start.py
+lvim /repositories

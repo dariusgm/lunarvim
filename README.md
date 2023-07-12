@@ -67,19 +67,18 @@ Before you can use the image, make sure to add additial credentials via volume,
 so you can work with git and other services, that require credentials.
 
 Run the image of the root directory, where all your repositories are that you want to work with.
-The start.sh script will check at boottime the permissions of the private keys
-and update them accordingly (using chmod 400).
+A script will check the settings (mounts) that you provide and launch lunarvim.
+Make sure to only overwrite the command of the container for debugging.
 
 ## Use (Linux)
 
 ```shell
-docker run -v $PWD:/repositories -v ~/.ssh:/root/.ssh -v ~/.gitconfig:/root/.gitconfig -it dariusmurawski/lunarvim:latest bash
+docker run -it -v $PWD:/repositories -v ~/.ssh:/root/.ssh -v ~/.gitconfig:/root/.gitconfig -it dariusmurawski/lunarvim:latest
 ```
 
 ## Use (Windows)
 
 ```shell
-docker run -it -v .:/repo -v $HOME\.ssh:/root/.ssh -v $HOME\.gitconfig:/root/.gitconfig  dariusmurawski/lunarvim:latest bash
-chmod 400 -R /root/.ssh && lvim /repo
+docker run -it -v .:/repositories -v $HOME\.ssh:/root/.ssh -v $HOME\.gitconfig:/root/.gitconfig  dariusmurawski/lunarvim:latest
 ```
  
