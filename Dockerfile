@@ -43,7 +43,7 @@ RUN lvim --headless +'MasonInstall tflint yamllint markdownlint jsonlint flake8 
 # Formatter
 RUN lvim --headless +'MasonInstall rustfmt yamlfmt jq black' +qall
 # Treesitter
-RUN lvim --headless +'TSInstallSync lua query markdown_inline comment regex vim vimdoc ini python gitignore' +qall
+RUN lvim --headless +'TSInstallSync lua query markdown_inline comment regex vim vimdoc ini python gitignore dockerfile markdown yaml' +qall
 
 ## For tests
 RUN pip install pytest
