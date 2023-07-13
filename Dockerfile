@@ -35,46 +35,16 @@ COPY config.lua /root/.config/lvim/config.lua
 RUN lvim --headless +LvimReload +qall
 RUN lvim --headless +'Lazy sync' +qall
 # LSP
-RUN lvim --headless +'MasonInstall ansible-language-server' +qall
-RUN lvim --headless +'MasonInstall cmake-language-server' +qall
-RUN lvim --headless +'MasonInstall css-lsp' +qall
-RUN lvim --headless +'MasonInstall docker-compose-language-service' +qall
-RUN lvim --headless +'MasonInstall dockerfile-language-server' +qall
-RUN lvim --headless +'MasonInstall html-lsp' +qall
-RUN lvim --headless +'MasonInstall python-lsp-server' +qall
-RUN lvim --headless +'MasonInstall lua-language-server' +qall
-
-# toml
-RUN lvim --headless +'MasonInstall taplo' +qall
-RUN lvim --headless +'MasonInstall terraform-ls' +qall
-RUN lvim --headless +'MasonInstall tflint' +qall
+RUN lvim --headless +'MasonInstall ansible-language-server cmake-language-server css-lsp docker-compose-language-service dockerfile-language-server html-lsp python-lsp-server lua-language-server taplo terraform-ls tflint' +qall
 # DAP
-RUN lvim --headless +'MasonInstall bash-debug-adapter' +qall
-# DAP Python
-RUN lvim --headless +'MasonInstall debugpy' +qall
+RUN lvim --headless +'MasonInstall bash-debug-adapter debugpy' +qall
 # Linter
 RUN lvim --headless +'MasonInstall tflint yamllint markdownlint jsonlint flake8 curlylint ansible-lint' +qall
 # Formatter
-# RUN lvim --headless +'MasonInstall htmlbeautifier' +qall
-# rust
-RUN lvim --headless +'MasonInstall rustfmt' +qall
-# yaml / yml
-RUN lvim --headless +'MasonInstall yamlfmt' +qall
-# jq
-RUN lvim --headless +'MasonInstall jq' +qall
-# python
-RUN lvim --headless +'MasonInstall black' +qall
+RUN lvim --headless +'MasonInstall rustfmt yamlfmt jq black' +qall
 # Treesitter
-RUN lvim --headless +'TSInstallSync lua' +qall
-RUN lvim --headless +'TSInstallSync query' +qall
-RUN lvim --headless +'TSInstallSync markdown_inline' +qall
-RUN lvim --headless +'TSInstallSync comment' +qall
-RUN lvim --headless +'TSInstallSync regex' +qall
-RUN lvim --headless +'TSInstallSync vim' +qall
-RUN lvim --headless +'TSInstallSync vimdoc' +qall
-RUN lvim --headless +'TSInstallSync ini' +qall
-RUN lvim --headless +'TSInstallSync python' +qall
-RUN lvim --headless +'TSInstallSync gitignore' +qall
+RUN lvim --headless +'TSInstallSync lua query markdown_inline comment regex vim vimdoc ini python gitignore' +qall
+
 ## For tests
 RUN pip install pytest
 COPY tests tests
@@ -86,3 +56,6 @@ CMD "/root/start.sh"
 
 ## install font on your client
 # curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/UbuntuMono.zip -o UbuntuMono.zip
+# For Ubuntu: mkdir -p ~/.fonts/ && mv UbuntuMono.zip ~/.fonts && cd ~/.fonts && unzip UbuntuMono.zip
+# For windows, drag and drop via "font" folder under "System Settings".
+
