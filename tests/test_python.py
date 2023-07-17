@@ -53,7 +53,7 @@ def test_pip_packages():
                 match = re.search(r"(\d+\.\d+\.\d+)", line)
                 if match:
                     major, minor, patch = match.group(1).split(".")
-                    major_expected, minor_expected, patch_expected = version.split(".")
+                    major_expected, minor_expected, _patch_expected = version.split(".")
                     assert int(major) == int(major_expected)
                     assert int(minor) >= int(minor_expected)
-                    assert int(patch) >= 0 
+                    assert int(patch) >= 0
