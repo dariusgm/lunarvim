@@ -97,15 +97,21 @@ docker run -it -e OPENAI_API_KEY=$OPENAI_API_KEY dariusmurawski/lunarvim
 
 You can access the Plugin via `:ChatGPT` command.
 
-# Usage
+### docker in docker
 
-Before using the image, ensure that you've added the necessary credentials 
-via volume mounts for services like git that require them.
+When developing docker images, you have several options to achieve this.
+We explain you the docker.socket option.
+
+### Pass docker.socket
+This will connect from inside of the container to your host docker daemon.
+Images and volumes will be stored on your host.
 
 
 ```bash
-docker run -it -v $PWD:/repositories -v ~/.ssh:/root/.ssh -v ~/.gitconfig:/root/.gitconfig -it dariusmurawski/lunarvim:latest
+docker run -v /var/run/docker.sock:/var/run/docker.sock -ti dariusmurawski/lunarvim:latest
 ```
+
+For more details, checkout this blog post: https://devopscube.com/run-docker-in-docker/# Customize
 
 # Customize
 You can customize the image to suit your own or your company's needs by adding other secrets to access mirrors or other CLI tools that you need.

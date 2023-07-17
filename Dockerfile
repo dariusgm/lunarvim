@@ -5,6 +5,7 @@ FROM dariusmurawski/lunarvim_aws:latest AS aws
 FROM dariusmurawski/lunarvim_node:latest AS node
 FROM dariusmurawski/lunarvim_rust:latest AS rust
 FROM rocker/r-ubuntu:22.04 AS r
+FROM docker as docker
 
 FROM dariusmurawski/lunarvim_base:latest
 # Support lazygit
@@ -39,6 +40,11 @@ COPY --from=r /usr/lib/libR.so /usr/lib/libR.so
 COPY --from=r /usr/lib/x86_64-linux-gnu/ /usr/lib/x86_64-linux-gnu/
 COPY --from=r /etc/alternatives/ /etc/alternatives/
 COPY --from=r /etc/R/ /etc/R/
+
+# Support for docker
+COPY --from=docker /usr/local/bin/ /usr/local/bin/
+COPY --from=docker /usr/local/libexec/docker/ /usr/local/libexec/docker
+
 # neovim and lunarvim
 ARG LV_BRANCH=release-1.3/neovim-0.9
 RUN  curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install-neovim-from-release | bash && \
