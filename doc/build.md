@@ -55,6 +55,13 @@ docker build --pull --progress=plain -t dariusmurawski/lunarvim_rust:latest rust
 docker push dariusmurawski/lunarvim_rust:latest
 ```
 
+## build bashdb
+```shell
+docker build --pull --progress=plain -t dariusmurawski/lunarvim_bashdb:latest bashdb
+docker push dariusmurawski/lunarvim_bashdb:latest
+```
+
+
 ## Release
 
 ```shell

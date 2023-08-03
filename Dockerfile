@@ -4,6 +4,7 @@ FROM dariusmurawski/lunarvim_powershell7:latest AS powershell7
 FROM dariusmurawski/lunarvim_aws:latest AS aws
 FROM dariusmurawski/lunarvim_node:latest AS node
 FROM dariusmurawski/lunarvim_rust:latest AS rust
+FROM dariusmurawski/lunarvim_bashdb:latest as bashdb
 FROM rocker/r-ubuntu:22.04 AS r
 FROM docker as docker
 
@@ -11,6 +12,10 @@ FROM dariusmurawski/lunarvim_base:latest
 # Support lazygit
 COPY --from=lazygit /usr/local/bin /usr/local/bin
 COPY --from=lazygit /root/.config/ /root/.config/
+
+# Support bashdb
+COPY --from=bashdb /usr/bin/bashdb /usr/bin/bashdb
+COPY --from=bashdb /usr/share/bashdb /usr/share/bashdb
 
 # Support for python
 COPY --from=python /usr/local /usr/local
@@ -48,7 +53,7 @@ COPY --from=docker /usr/local/libexec/docker/ /usr/local/libexec/docker
 # neovim and lunarvim
 ARG LV_BRANCH=release-1.3/neovim-0.9
 RUN  curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install-neovim-from-release | bash && \
-     curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install.sh | bash -s -- --no-install-dependencies
+  curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install.sh | bash -s -- --no-install-dependencies
 ENV PATH="/root/.local/bin:$PATH"
 
 # core update to trigger first boot
