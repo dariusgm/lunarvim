@@ -1,5 +1,8 @@
 lvim.plugins                            = {
   {
+    "luk400/vim-jukit",
+  },
+  {
     -- Renders a minimap, same as in sublime text.
     'wfxr/minimap.vim',
     build = "cargo install --locked code-minimap",
@@ -131,3 +134,6 @@ lvim.format_on_save                     = true
 lvim.leader                             = "space"
 lvim.builtin.treesitter.rainbow.enable  = true
 lvim.lsp.automatic_servers_installation = false
+
+-- relative line numbers as default
+vim.wo.relativenumber                   = true
