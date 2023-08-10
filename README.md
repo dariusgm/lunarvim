@@ -115,7 +115,8 @@ For more details, checkout this blog post: https://devopscube.com/run-docker-in-
 
 ### Pass proxy parameter
 If you want to work with lunarvim image behind a proxy and want to be able to easily acces the internet. No Problem.
-You can pass the proxy parameter by using an env file as follows:
+You can pass the proxy parameter by using an env file as follows.
+
 1. Create an env file with your proxy settings, i.e. '.env'
 ```
 http_proxy=http://<USER>:<PASSWORD>@<HOST>:<PORT>
@@ -125,7 +126,17 @@ HTTPS_PROXY=http://<USER>:<PASSWORD>@<HOST>:<PORT>
 no_proxy=<NO_PROXY_HOSTS>
 NO_PROXY=<NO_PROXY_HOSTS>
 ```
-Alternatively, you can use and substitute env vars from your current system with `envsubst < .env_template > .env` (you need a template with the senv vars in it). 
+Alternatively, you can use and substitute env vars from your current system with `envsubst < .env_template > .env`.
+You need a template with the env vars in it tyo do so, i.e.
+```
+http_proxy=http://$USER:$PASSWORD@$HOST:$PORT
+https_proxy=http://$USER:$PASSWORD@$HOST:$PORT
+HTTP_PROXY=http://$USER:$PASSWORD@$HOST:$PORT
+HTTPS_PROXY=http://$USER:$PASSWORD@$HOST:$PORT
+no_proxy=$NO_PROXY_HOSTS
+NO_PROXY=$NO_PROXY_HOSTS
+```
+
 2. Start your container with a modified statement
 ```bash
 docker run --env-file ./.env -ti dariusmurawski/lunarvim:latest
