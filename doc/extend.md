@@ -11,3 +11,9 @@ please follow this steps:
 * Run `apt-get install -y plocate binutils`
 * with `which <executable>`, `locate <executable>` and `ldd <executable>`
 to get a feeling for what is loaded / needed for the execution.
+
+# Extracting layer information
+When you want to extract the image more granular for multi-stage, use `dive` to see the changes
+that where applied to your container. You can find more informations in the
+[Dive Repository](https://github.com/wagoodman/dive).
+
