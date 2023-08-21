@@ -65,11 +65,11 @@ RUN lvim --headless +'MasonInstall ansible-language-server cmake-language-server
 # DAP
 RUN lvim --headless +'MasonInstall bash-debug-adapter debugpy' +qall
 # Linter
-RUN lvim --headless +'MasonInstall tflint yamllint markdownlint jsonlint flake8 curlylint ansible-lint' +qall
+RUN lvim --headless +'MasonInstall tflint yamllint markdownlint jsonlint flake8 curlylint ansible-lint lemminx' +qall
 # Formatter
 RUN lvim --headless +'MasonInstall rustfmt yamlfmt jq black' +qall
 # Treesitter
-RUN lvim --headless +'TSInstallSync lua query markdown_inline comment regex vim vimdoc ini python gitignore dockerfile markdown yaml toml rust' +qall
+RUN lvim --headless +'TSInstallSync lua query markdown_inline comment regex vim vimdoc ini python gitignore dockerfile markdown yaml toml rust html ' +qall
 
 ## For tests
 RUN pip install pytest
